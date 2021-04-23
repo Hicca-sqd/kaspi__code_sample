@@ -114,21 +114,21 @@
             $dealId = $result['result'];
             return $dealId; 
 		}
-
 	 	function setProducts($products, $dealId) {
-			foreach ($products as $key => $value) {				
-				$addProduct = array(
-				    'id' => $dealId,
-				    'rows' => array(
-				        array(
-				        'PRODUCT_NAME' => $value['name'],
-				        'PRICE' => $value['basePrice'],
-				        'QUANTITY' => $value['quantity'],
-				        )
-				       )
-				    );
-				$url = $this->rest.'/crm.deal.productrows.set.json';
-				$this->restExecuteURLquery($url, $addProduct);
-			}
+		    $rows = array();
+			foreach ($products as $key => $value) {
+                $product = array(
+                    'PRODUCT_NAME' => $value['name'],
+                    'PRICE' => $value['basePrice'],
+                    'QUANTITY' => $value['quantity'],
+                );
+                $rows[] = $product;
+            }
+            $product = array(
+                'id' => $dealId,
+                'rows' => $rows
+            );
+            $url = $this->rest.'/crm.deal.productrows.set.json';
+            $this->restExecuteURLquery($url, $product);
 		}
 	}

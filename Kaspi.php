@@ -76,10 +76,10 @@ class Kaspi
                 }
 
                 $contact_id = $kaspiOrder->checkOrderContact($this->BitrixHelper);
-                if (!isset($contact_id)) {
-                    $kaspiOrder->addOrderContact($this->BitrixHelper);
-                } else {
+                if (isset($contact_id)) {
                     $kaspiOrder->contact_id = $contact_id;
+                } else {
+                    $kaspiOrder->addOrderContact($this->BitrixHelper);
                 }
 
                 $orderGoods = $kaspiOrder->getOrderGoods();
